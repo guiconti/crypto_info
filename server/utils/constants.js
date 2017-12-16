@@ -11,5 +11,9 @@ module.exports = {
     success: {
       USER_REGISTERED: 'User registered.'
     }
+  },
+  urls: {
+    CRYPTO_CURRENCY_INFO_PREFIX: 'https://api.blinktrade.com/api/v1/',
+    CRYPTO_CURRENCY_INFO_SUFFIX: '/ticker?crypto_currency='
   }
 };
