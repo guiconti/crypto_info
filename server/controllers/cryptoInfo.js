@@ -36,8 +36,9 @@ module.exports = (req, res) => {
       return res.status(500).json({
         msg: constants.messages.error.ACCESS_BLOCKCHAIN_INFO
       });
+    let cryptoInfo = JSON.parse(body);
     return res.status(200).json({
-      msg: body
+      msg: cryptoInfo
     });
   });
 };
