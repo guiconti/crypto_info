@@ -26,20 +26,29 @@ module.exports = (req, res) => {
   }
   if (!validator.isValidString(toCurrency)){
     return res.status(400).json({
-      msg: constants.messages.error.INVALID_CURRENCY
+      msg: constants.messages.error.INVALID_CRYPTO_CURRENCY
     });
   }
-  const currencyInfoUrl = constants.urls.BITTREX_CURRENCY_EXCHANGE_PREFIX + fromCurrency.trim() + 
+  const currencyExchangeUrl = constants.urls.BITTREX_CURRENCY_EXCHANGE_PREFIX + fromCurrency.trim() + 
     '-' + toCurrency.trim();
-  console.log(currencyInfoUrl);
-  request.get({url: currencyInfoUrl}, (err, httpResponse, body) => {
+  request.get({url: currencyExchangeUrl}, (err, httpResponse, body) => {
     if (err)
       return res.status(500).json({
         msg: constants.messages.error.ACCESS_BLOCKCHAIN_INFO
       });
-    let cryptoInfo = JSON.parse(body);
-    return res.status(200).json({
-      msg: cryptoInfo
+    let currencyExchangeInfo = JSON.parse(body);
+    const finalCurrencyUrl = constants.urls.BTC_INFO;
+    request.get({url: finalCurrencyUrl}, (err, httpResponse, body) => {
+      if (err)
+        return res.status(500).json({
+          msg: constants.messages.error.ACCESS_BLOCKCHAIN_INFO
+        });
+      let finalCurrencyInfo = JSON.parse(body);
+      let currencyExchangeValue = currencyExchangeInfo.result[0].Bid;
+      let finalCurrencyBuyValue = finalCurrencyInfo.bpi.USD.rate_float;
+      return res.status(200).json({
+        msg: currencyExchangeValue * finalCurrencyBuyValue
+      });
     });
   });
 };

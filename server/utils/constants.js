@@ -13,9 +13,11 @@ module.exports = {
       USER_REGISTERED: 'User registered.'
     }
   },
+  values: {
+    FINAL_CURRENCY: 'BRL'
+  },
   urls: {
-    CRYPTO_CURRENCY_INFO_PREFIX: 'https://api.blinktrade.com/api/v1/',
-    CRYPTO_CURRENCY_INFO_SUFFIX: '/ticker?crypto_currency=',
+    BTC_INFO: 'https://api.coindesk.com/v1/bpi/currentprice.json',
     BITTREX_CURRENCY_EXCHANGE_PREFIX: 'https://bittrex.com/api/v1.1/public/getmarketsummary?market='
   }
 };
