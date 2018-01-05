@@ -35,7 +35,7 @@ module.exports = (req, res) => {
     .then((currencyInfo) => {
       return res.status(200).json({
         msg: `${toCurrency} is ${currencyInfo.currencyConverted} ${fromCurrency} the change in the last 24h is ${currencyInfo.currencyFullDayChange}%
-        and ${currencyInfo.currencyConverted * currencyInfo.finalCurrencyValue}USD`
+and ${currencyInfo.currencyConverted * currencyInfo.finalCurrencyValue}USD`
       });
     })
     .catch(err => {
