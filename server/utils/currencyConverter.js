@@ -18,8 +18,8 @@ const constants = require('./constants');
 
 module.exports = (fromCurrency, toCurrency) => {
   return new Promise((resolve, reject) => {
-    const currencyExchangeUrl = constants.urls.BITTREX_CURRENCY_EXCHANGE_PREFIX + fromCurrency + 
-      '-' + toCurrency;
+    const currencyExchangeUrl = constants.urls.BITTREX_CURRENCY_EXCHANGE_PREFIX + toCurrency + 
+      '-' + fromCurrency;
     request.get({url: currencyExchangeUrl}, (err, httpResponse, body) => {
       if (err)
         return reject(err);

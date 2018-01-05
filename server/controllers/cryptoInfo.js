@@ -34,8 +34,8 @@ module.exports = (req, res) => {
   currencyConverter(fromCurrency, toCurrency)
     .then((currencyInfo) => {
       return res.status(200).json({
-        msg: `${toCurrency} is ${currencyInfo.currencyConverted} ${fromCurrency} the change in the last 24h is ${currencyInfo.currencyFullDayChange}%
-The value of ${toCurrency} in USD is $${currencyInfo.currencyConverted * currencyInfo.finalCurrencyValue}`
+        msg: `${fromCurrency} is ${currencyInfo.currencyConverted} ${toCurrency} the change in the last 24h is ${currencyInfo.currencyFullDayChange}%
+The value of ${fromCurrency} in USD is $${currencyInfo.currencyConverted * currencyInfo.finalCurrencyValue}`
       });
     })
     .catch(err => {
