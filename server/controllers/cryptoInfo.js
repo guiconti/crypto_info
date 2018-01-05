@@ -29,8 +29,8 @@ module.exports = (req, res) => {
       msg: constants.messages.error.INVALID_CRYPTO_CURRENCY
     });
   }
-  fromCurrency = fromCurrency.trim();
-  toCurrency = toCurrency.trim();
+  fromCurrency = fromCurrency.trim().toUpperCase();
+  toCurrency = toCurrency.trim().toUpperCase();
   currencyConverter(fromCurrency, toCurrency)
     .then((currencyInfo) => {
       return res.status(200).json({
