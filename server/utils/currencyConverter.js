@@ -29,6 +29,8 @@ module.exports = (fromCurrency, toCurrency) => {
         if (err)
           return reject(err);
         let finalCurrencyInfo = JSON.parse(body);
+        if (!currencyExchangeInfo || !currencyExchangeInfo.result)
+          return reject(err);
         let currencyFullDayChange = ((currencyExchangeInfo.result[0].Bid/currencyExchangeInfo.result[0].PrevDay) - 1) * 100;
         let currencyInfo = {
           currencyConverted: currencyExchangeInfo.result[0].Bid,
