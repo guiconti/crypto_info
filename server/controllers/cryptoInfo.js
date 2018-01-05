@@ -3,9 +3,9 @@
  * @module controllers/cryptoValue
 */
 
-const request = require('request');
 const validator = require('../utils/validator');
 const constants = require('../utils/constants');
+const currencyConverter = require('../utils/currencyConverter');
 const logger = require('../../tools/logger');
 
 /**
@@ -29,26 +29,18 @@ module.exports = (req, res) => {
       msg: constants.messages.error.INVALID_CRYPTO_CURRENCY
     });
   }
-  const currencyExchangeUrl = constants.urls.BITTREX_CURRENCY_EXCHANGE_PREFIX + fromCurrency.trim() + 
-    '-' + toCurrency.trim();
-  request.get({url: currencyExchangeUrl}, (err, httpResponse, body) => {
-    if (err)
+  fromCurrency = fromCurrency.trim();
+  toCurrency = toCurrency.trim();
+  currencyConverter(fromCurrency, toCurrency)
+    .then((currencyInfo) => {
+      return res.status(200).json({
+        msg: `${toCurrency} is ${currencyInfo.currencyConverted} ${fromCurrency} and ${currencyInfo.currencyConverted * currencyInfo.finalCurrencyValue}USD`
+      });
+    })
+    .catch(err => {
+      console.log(err);
       return res.status(500).json({
         msg: constants.messages.error.ACCESS_BLOCKCHAIN_INFO
       });
-    let currencyExchangeInfo = JSON.parse(body);
-    const finalCurrencyUrl = constants.urls.BTC_INFO;
-    request.get({url: finalCurrencyUrl}, (err, httpResponse, body) => {
-      if (err)
-        return res.status(500).json({
-          msg: constants.messages.error.ACCESS_BLOCKCHAIN_INFO
-        });
-      let finalCurrencyInfo = JSON.parse(body);
-      let currencyExchangeValue = currencyExchangeInfo.result[0].Bid;
-      let finalCurrencyBuyValue = finalCurrencyInfo.bpi.USD.rate_float;
-      return res.status(200).json({
-        msg: currencyExchangeValue * finalCurrencyBuyValue
-      });
     });
-  });
 };
