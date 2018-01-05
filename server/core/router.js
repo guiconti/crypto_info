@@ -7,6 +7,6 @@ router.use(bodyParser.json());
 const cryptoInfo = require('../controllers/cryptoInfo');
 
 //  Placeholder API
-router.get('/info', cryptoInfo);
+router.get('/convert_currency', cryptoInfo);
 
 module.exports = router;
