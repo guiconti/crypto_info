@@ -34,11 +34,11 @@ module.exports = (req, res) => {
   currencyConverter(fromCurrency, toCurrency)
     .then((currencyInfo) => {
       return res.status(200).json({
-        msg: `${toCurrency} is ${currencyInfo.currencyConverted} ${fromCurrency} and ${currencyInfo.currencyConverted * currencyInfo.finalCurrencyValue}USD`
+        msg: `${toCurrency} is ${currencyInfo.currencyConverted} ${fromCurrency} the change in the last 24h is ${currencyInfo.currencyFullDayChange}%
+        and ${currencyInfo.currencyConverted * currencyInfo.finalCurrencyValue}USD`
       });
     })
     .catch(err => {
-      console.log(err);
       return res.status(500).json({
         msg: constants.messages.error.ACCESS_BLOCKCHAIN_INFO
       });

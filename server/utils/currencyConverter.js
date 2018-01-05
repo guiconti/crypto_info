@@ -29,9 +29,11 @@ module.exports = (fromCurrency, toCurrency) => {
         if (err)
           return reject(err);
         let finalCurrencyInfo = JSON.parse(body);
+        let currencyFullDayChange = ((currencyExchangeInfo.result[0].Bid/currencyExchangeInfo.result[0].PrevDay) - 1) * 100;
         let currencyInfo = {
           currencyConverted: currencyExchangeInfo.result[0].Bid,
-          finalCurrencyValue: finalCurrencyInfo.bpi.USD.rate_float
+          finalCurrencyValue: finalCurrencyInfo.bpi.USD.rate_float,
+          currencyFullDayChange: Math.round(currencyFullDayChange * 100)/100
         };
         return resolve(currencyInfo);
       });
