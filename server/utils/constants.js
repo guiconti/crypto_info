@@ -23,6 +23,7 @@ module.exports = {
     KUCOIN_PREFIX: 'https://api.kucoin.com',
     KUCOIN_GET_BALANCE: '/v1/account/balance',
     KUCOIN_GET_COIN_BALANCE_PREFIX: '/v1/account/',
-    KUCOIN_GET_COIN_BALANCE_SUFFIX: '/balance'
+    KUCOIN_GET_COIN_BALANCE_SUFFIX: '/balance',
+    KUCOIN_GET_MARKET_LIST: '/v1/market/open/symbols'
   }
 };

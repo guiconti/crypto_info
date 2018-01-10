@@ -194,6 +194,46 @@ class Kucoin {
     return this.doSignedRequest('get', constants.urls.KUCOIN_GET_COIN_BALANCE_PREFIX + (coin?coin:'') +
       constants.urls.KUCOIN_GET_COIN_BALANCE_SUFFIX);
   }
+
+  /**
+   * Retrieve a list of available trading pairs.
+   * @access public
+   * @return {Promise} An object containing the API response.
+   * @example
+   * kc.getTradingSymbols().then(console.log).catch(console.error)
+   * 
+   * // Returns:
+   * 
+   * {
+   *   "success": true,
+   *   "code": "OK",
+   *   "msg": "Operation succeeded.",
+   *   "timestamp": 1509592839027,
+   *   "data": [{
+   *     "coinType": "KCS",
+   *     "trading": true,
+   *     "symbol": "KCS-BTC",
+   *     "lastDealPrice": 0.00009277,
+   *     "buy": 0.00009003,
+   *     "sell": 0.0000927,
+   *     "change": -0.00000322,
+   *     "coinTypePair": "BTC",
+   *     "sort": 0,
+   *     "feeRate": 0.001,
+   *     "volValue": 139.78123495,
+   *     "high": 0.00012281,
+   *     "datetime": 1509592836000,
+   *     "vol": 1347022.79127505,
+   *     "low": 0.0000835,
+   *     "changeRate": -0.0335
+   *   }, {
+   *     ...
+   *   }]
+   * }
+  */
+  getTradingSymbols() {
+    return this.doRequest('get', constants.urls.KUCOIN_GET_MARKET_LIST);
+  }
 }
 
 module.exports = Kucoin;
