@@ -38,7 +38,7 @@ class Kucoin {
       let url = constants.urls.KUCOIN_PREFIX + path;
       let nonce = new Date().getTime();
       let queryString;
-      if (params !== undefined) {
+      if (params) {
         queryString = [];
         for (let key in params) {
           queryString.push(key + '=' + params[key]);

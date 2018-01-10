@@ -7,7 +7,8 @@ module.exports = {
     error: {
       INVALID_CRYPTO_CURRENCY: 'You need to send a valid crypto currency.',
       INVALID_CURRENCY: 'You need to send a valid currency.',
-      ACCESS_BLOCKCHAIN_INFO: 'There is a problem with the connection to this blockchain info. Please try again.'
+      ACCESS_BLOCKCHAIN_INFO: 'There is a problem with the connection to this blockchain info. Please try again.',
+      UNEXPECTED: 'An unexpected error occurred while trying to access your info. Please try again.'
     },
     success: {
       USER_REGISTERED: 'User registered.'

@@ -4,6 +4,8 @@
 */
 
 const Kucoin = require('../utils/Kucoin');
+const validator = require('../utils/validator');
+const constants = require('../utils/constants');
 
 /**
  * Get information about user`s wallet
@@ -14,7 +16,28 @@ const Kucoin = require('../utils/Kucoin');
  * 
 */
 module.exports = (req, res) => {
-  return res.status(200).json({
-    msg: 'Hi'
-  });
+  let {coin} = req.query;
+  if (!validator.isValidString(coin))
+    return res.status(400).json({
+      data: constants.messages.error.INVALID_CURRENCY
+    });
+  let myWallet = new Kucoin(process.env.KUCOIN_API_KEY, process.env.KUCOIN_SECRET);
+  myWallet.getBalance(coin)
+    .then(balanceInfo => {
+      if (balanceInfo.error)
+        return res.status(400).json({
+          data: constants.messages.error.INVALID_CRYPTO_CURRENCY
+        });
+      return res.status(200).json({
+        data: {
+          coin: balanceInfo.data.coinType,
+          balance: balanceInfo.data.balance
+        }
+      });
+    })
+    .catch(err => {
+      return res.status(500).json({
+        data: constants.messages.error.UNEXPECTED
+      });
+    });
 };
