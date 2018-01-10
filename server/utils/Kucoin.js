@@ -123,9 +123,49 @@ class Kucoin {
   }
 
   /**
+   * Retrieve a page of the user's balance (multiple coins)
+   * @access public
+   * @param {{limit: integer}} [params] page limit，default 12，max 20
+   * @param {{page: integer}} [params] page number，default 1
+   * @return {Promise} An object containing the API response.
+   * @example <caption>Retrieve the balance:</caption>
+   * kc.getBalance({
+   *   symbol: 'NEO'
+   * }).then(console.log).catch(console.error)
+   * 
+   * // Returns:
+   * 
+   * {
+   *   "success": true,
+   *   "code": "OK",
+   *   "msg": "Operation succeeded.",
+   *   "timestamp": 1509592077557,
+   *   "data": [{
+   *     "coinType": "NEO",
+   *     "balanceStr": "10.72040467",
+   *     "freezeBalance": 0,
+   *     "balance": 10.72040467,
+   *     "freezeBalanceStr": "0.0"
+   *   },
+   *   {
+   *     "coinType": "BTC",
+   *     "balanceStr": "1.72040467",
+   *     "freezeBalance": 0,
+   *     "balance": 1.72040467,
+   *     "freezeBalanceStr": "0.0"
+   *   }]
+   * }
+   * @example <caption>Retrieve the balance for all coins (including zero balances):</caption>
+   * kc.getBalance().then(console.log).catch(console.error)
+  */
+  getBalance(params = {}) {
+    return this.doSignedRequest('get', constants.urls.KUCOIN_GET_BALANCE, params);
+  }
+
+  /**
    * Retrieve balance for a particular coin.
    * @access public
-   * @param {{symbol: string}} [params] The coin's symbol for the balance you want to retrieve.
+   * @param {coin: string} [params] The coin's symbol for the balance you want to retrieve.
    * @return {Promise} An object containing the API response.
    * @example <caption>Retrieve the balance for NEO:</caption>
    * kc.getBalance({
@@ -150,9 +190,9 @@ class Kucoin {
    * @example <caption>Retrieve the balance for all coins (including zero balances):</caption>
    * kc.getBalance().then(console.log).catch(console.error)
   */
-  getBalance(coin) {
-    return this.doSignedRequest('get', constants.urls.KUCOIN_GET_BALANCE_PREFIX + (coin?coin:'') +
-      constants.urls.KUCOIN_GET_BALANCE_SUFFIX);
+  getCoinBalance(coin) {
+    return this.doSignedRequest('get', constants.urls.KUCOIN_GET_COIN_BALANCE_PREFIX + (coin?coin:'') +
+      constants.urls.KUCOIN_GET_COIN_BALANCE_SUFFIX);
   }
 }
 
