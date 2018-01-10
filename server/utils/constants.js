@@ -18,6 +18,9 @@ module.exports = {
   },
   urls: {
     BTC_INFO: 'https://api.coindesk.com/v1/bpi/currentprice.json',
-    BITTREX_CURRENCY_EXCHANGE_PREFIX: 'https://bittrex.com/api/v1.1/public/getmarketsummary?market='
+    BITTREX_CURRENCY_EXCHANGE_PREFIX: 'https://bittrex.com/api/v1.1/public/getmarketsummary?market=',
+    KUCOIN_PREFIX: 'https://api.kucoin.com',
+    KUCOIN_GET_BALANCE_PREFIX: '/v1/account/',
+    KUCOIN_GET_BALANCE_SUFFIX: '/balance'
   }
 };
