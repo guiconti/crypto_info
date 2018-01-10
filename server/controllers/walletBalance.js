@@ -23,14 +23,24 @@ module.exports = (req, res) => {
         return res.status(400).json({
           data: constants.messages.error.INVALID_CRYPTO_CURRENCY
         });
-      let activeWallet = [];
-      balanceInfo.data.forEach(coinInfo => {
-        if (coinInfo.balance > 0)
-          activeWallet.push(coinInfo);
-      });
-      return res.status(200).json({
-        data: activeWallet
-      }); 
+      myWallet.getTradingSymbols()
+        .then(kucoinMarket => {
+          let activeWallet = [];
+          balanceInfo.data.forEach(coinInfo => {
+            if (coinInfo.balance > 0){
+              addBTCValue(coinInfo, kucoinMarket.data);
+              activeWallet.push(coinInfo);
+            }
+          });
+          return res.status(200).json({
+            data: activeWallet
+          }); 
+        })
+        .catch(err => {
+          return res.status(500).json({
+            data: constants.messages.error.UNEXPECTED
+          });
+        });
     })
     .catch(err => {
       return res.status(500).json({
@@ -38,3 +48,17 @@ module.exports = (req, res) => {
       });
     });
 };
+
+function addBTCValue(coin, marketList){
+  if (coin.coinType === 'BTC')
+    return;
+  marketList.every(marketCoin => {
+    if (marketCoin.symbol === coin.coinType + '-BTC'){
+      coin.RatioBTCValue = marketCoin.sell;
+      coin.BTCValue = marketCoin.sell * coin.balance;
+      return false;
+    }
+    return true;
+  });
+};
+
