@@ -16,8 +16,8 @@ const constants = require('./constants');
 */
 module.exports = (decryptedData, key) => {
   try {
-    if(!decryptedData) return reject(constants.messages.error.INVALID_ENCRYPT_DATA);
-    let encryptedData = crypto.AES.encrypt(JSON.stringify(decryptedData), key).toString();
+    if(!decryptedData) return -1;
+    let encryptedData = crypto.AES.encrypt(decryptedData.toString(), key).toString();
     return encryptedData;  
   } catch (err){
     return err;

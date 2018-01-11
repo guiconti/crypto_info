@@ -26,3 +26,8 @@ exports.isValidInteger = integerToValidate => {
     && parseInt(integerToValidate) <= Number.MAX_SAFE_INTEGER 
     && parseInt(integerToValidate) >= Number.MIN_SAFE_INTEGER;
 };
+
+exports.isEncryptationActive = () => {
+  return (constants.encryptation.WALLET_API_ENCRYPTATION_KEY && 
+    constants.encryptation.WALLET_SECRET_ENCRYPTATION_KEY);
+}

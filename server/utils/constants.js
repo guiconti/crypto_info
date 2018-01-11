@@ -15,6 +15,7 @@ module.exports = {
       INVALID_WALLET_API_KEY: 'Invalid wallet api key',
       INVALID_WALLET_SECRET_KEY: 'Invalid wallet secret key',
       API_DISABLED: 'This API is not enabled at the server right now',
+      USER_NOT_REGISTERED: 'This user is not registered in our database.',
       UNEXPECTED: 'An unexpected error occurred while trying to access your info. Please try again.'
     },
     success: {
@@ -37,7 +38,6 @@ module.exports = {
     integer: /^-?\d+$/
   },
   encryptation: {
-    USER_ID_ENCRYPTATION_KEY: process.env.USER_ID_ENCRYPTATION_KEY,
     WALLET_API_ENCRYPTATION_KEY: process.env.WALLET_API_ENCRYPTATION_KEY,
     WALLET_SECRET_ENCRYPTATION_KEY: process.env.WALLET_SECRET_ENCRYPTATION_KEY
   }

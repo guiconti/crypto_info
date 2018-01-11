@@ -20,13 +20,11 @@ const logger = require('../../tools/logger');
  * 
 */
 module.exports = (req, res) => {
-  if (!constants.encryptation.USER_ID_ENCRYPTATION_KEY || 
-      !constants.encryptation.WALLET_API_ENCRYPTATION_KEY || 
-      !constants.encryptation.WALLET_SECRET_ENCRYPTATION_KEY){
+  if (!validator.isEncryptationActive)
     return res.status(500).json({
       data: constants.messages.error.API_DISABLED
     });
-  }
+  
   let {userId, exchanger, walletApi, walletSecret} = req.body;
   if (!validator.isValidInteger(userId))
     return res.status(400).json({
@@ -46,7 +44,7 @@ module.exports = (req, res) => {
     });
   try{
     let walletData = {
-      userId: encryptor(userId, constants.encryptation.USER_ID_ENCRYPTATION_KEY),
+      userId: userId.toString().trim(),
       exchanger: exchanger.toLowerCase().trim(),
       walletApi: encryptor(walletApi.trim(), constants.encryptation.WALLET_API_ENCRYPTATION_KEY),
       walletSecret: encryptor(walletSecret.trim(), constants.encryptation.WALLET_SECRET_ENCRYPTATION_KEY)

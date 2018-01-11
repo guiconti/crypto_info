@@ -4,6 +4,9 @@
 */
 
 const Kucoin = require('../utils/Kucoin');
+const getWalletKeys = require('../utils/getWalletKeys');
+const encryptor = require('../utils/encryptor');
+const decryptor = require('../utils/decryptor');
 const getBTCtoUSD = require('../utils/getBTCtoUSD');
 const validator = require('../utils/validator');
 const constants = require('../utils/constants');
@@ -17,27 +20,52 @@ const logger = require('../../tools/logger');
  * 
 */
 module.exports = (req, res) => {
-  getBTCtoUSD()
-    .then(BTCtoUSDValue => {
-      let myWallet = new Kucoin(process.env.KUCOIN_API_KEY, process.env.KUCOIN_SECRET);
-      myWallet.getBalance()
-        .then(balanceInfo => {
-          if (balanceInfo.error)
-            return res.status(400).json({
-              data: constants.messages.error.INVALID_CRYPTO_CURRENCY
-            });
-          myWallet.getTradingSymbols()
-            .then(kucoinMarket => {
-              let activeWallet = [];
-              balanceInfo.data.forEach(coinInfo => {
-                if (coinInfo.balance > 0){
-                  convertToSellCurrencies(coinInfo, kucoinMarket.data, BTCtoUSDValue);
-                  activeWallet.push(coinInfo);
-                }
-              });
-              return res.status(200).json({
-                data: activeWallet
-              }); 
+  if (!validator.isEncryptationActive)
+    return res.status(500).json({
+      data: constants.messages.error.API_DISABLED
+    });
+
+  let {userId} = req.params;
+  if (!validator.isValidInteger(userId))
+    return res.status(400).json({
+      data: constants.messages.error.INVALID_USER_ID
+    });
+  getWalletKeys(userId.trim())
+    .then(wallet => {
+      if (!wallet)
+        return res.status(400).json({
+          data: constants.messages.error.USER_NOT_REGISTERED
+        });
+      let walletApi = decryptor(wallet.walletApi, constants.encryptation.WALLET_API_ENCRYPTATION_KEY);
+      let walletSecret = decryptor(wallet.walletSecret, constants.encryptation.WALLET_SECRET_ENCRYPTATION_KEY);
+      getBTCtoUSD()
+        .then(BTCtoUSDValue => {
+          let myWallet = new Kucoin(walletApi, walletSecret);
+          myWallet.getBalance()
+            .then(balanceInfo => {
+              if (balanceInfo.error)
+                return res.status(400).json({
+                  data: constants.messages.error.INVALID_CRYPTO_CURRENCY
+                });
+              myWallet.getTradingSymbols()
+                .then(kucoinMarket => {
+                  let activeWallet = [];
+                  balanceInfo.data.forEach(coinInfo => {
+                    if (coinInfo.balance > 0){
+                      convertToSellCurrencies(coinInfo, kucoinMarket.data, BTCtoUSDValue);
+                      activeWallet.push(coinInfo);
+                    }
+                  });
+                  return res.status(200).json({
+                    data: activeWallet
+                  }); 
+                })
+                .catch(err => {
+                  logger.error(err);
+                  return res.status(500).json({
+                    data: constants.messages.error.UNEXPECTED
+                  });
+                });
             })
             .catch(err => {
               logger.error(err);
@@ -49,16 +77,15 @@ module.exports = (req, res) => {
         .catch(err => {
           logger.error(err);
           return res.status(500).json({
-            data: constants.messages.error.UNEXPECTED
+            data: constants.messages.error.ACCESS_BLOCKCHAIN_INFO
           });
         });
     })
     .catch(err => {
-      logger.error(err);
       return res.status(500).json({
-        data: constants.messages.error.ACCESS_BLOCKCHAIN_INFO
+        data: constants.messages.error.UNEXPECTED
       });
-    })
+    });
 };
 
 function convertToSellCurrencies(coin, marketList, BTCtoUSDValue){
