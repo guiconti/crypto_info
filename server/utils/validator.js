@@ -4,6 +4,7 @@
 */
 
 const _ = require('underscore');
+const constants = require('./constants');
 
 /**
  * Validate if the input is a valid not empty string
