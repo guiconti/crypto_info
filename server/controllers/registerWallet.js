@@ -13,8 +13,8 @@ const logger = require('../../tools/logger');
  * Register a new wallet to DB
  * @param {req.body.userId} - User`s ID
  * @param {req.body.exchanger} - User`s telegram ID
- * @param {req.body.apiKey} - User`s telegram ID
- * @param {req.body.secretKey} - User`s telegram ID
+ * @param {req.body.walletApi} - User`s telegram ID
+ * @param {req.body.walletSecret} - User`s telegram ID
  * @return {object} - Returns information about the user's wallet
  * @throws {object} - Returns a msg that indicates a fail
  * 
@@ -27,7 +27,7 @@ module.exports = (req, res) => {
       data: constants.messages.error.API_DISABLED
     });
   }
-  let {userId, exchanger, apiKey, secretKey} = req.body;
+  let {userId, exchanger, walletApi, walletSecret} = req.body;
   if (!validator.isValidInteger(userId))
     return res.status(400).json({
       data: constants.messages.error.INVALID_USER_ID
@@ -36,11 +36,11 @@ module.exports = (req, res) => {
     return res.status(400).json({
       data: constants.messages.error.INVALID_EXCHANGER
     });
-  if (!validator.isValidString(apiKey))
+  if (!validator.isValidString(walletApi))
     return res.status(400).json({
       data: constants.messages.error.INVALID_WALLET_API_KEY
     });
-  if (!validator.isValidString(secretKey))
+  if (!validator.isValidString(walletSecret))
     return res.status(400).json({
       data: constants.messages.error.INVALID_WALLET_SECRET_KEY
     });
@@ -48,12 +48,22 @@ module.exports = (req, res) => {
     let walletData = {
       userId: encryptor(userId, constants.encryptation.USER_ID_ENCRYPTATION_KEY),
       exchanger: exchanger.toLowerCase().trim(),
-      walletApi: encryptor(apiKey.trim(), constants.encryptation.WALLET_API_ENCRYPTATION_KEY),
-      walletSecret: encryptor(secretKey.trim(), constants.encryptation.WALLET_SECRET_ENCRYPTATION_KEY)
+      walletApi: encryptor(walletApi.trim(), constants.encryptation.WALLET_API_ENCRYPTATION_KEY),
+      walletSecret: encryptor(walletSecret.trim(), constants.encryptation.WALLET_SECRET_ENCRYPTATION_KEY)
     };
-    return res.status(200).json({
-      data: walletData
-    });
+    let newWallet = database.wallet.build(walletData);
+    newWallet
+      .save()
+      .then(() => {
+        return res.status(200).json({
+          data: constants.messages.success.WALLET_REGISTERED
+        })
+      })
+      .catch(err => {
+        return res.status(500).json({
+          data: constants.messages.error.UNEXPECTED
+        });
+      });
   } catch(err){
     logger.error(err);
     return res.status(500).json({

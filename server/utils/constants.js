@@ -18,7 +18,7 @@ module.exports = {
       UNEXPECTED: 'An unexpected error occurred while trying to access your info. Please try again.'
     },
     success: {
-      USER_REGISTERED: 'User registered.'
+      WALLET_REGISTERED: 'Wallet registered.'
     }
   },
   values: {
