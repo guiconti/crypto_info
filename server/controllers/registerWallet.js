@@ -3,6 +3,7 @@
  * @module controllers/registerWallet
 */
 
+const database = require('../models/database');
 const validator = require('../utils/validator');
 const constants = require('../utils/constants');
 const encryptor = require('../utils/encryptor');
@@ -55,7 +56,6 @@ module.exports = (req, res) => {
     });
   } catch(err){
     logger.error(err);
-    console.log(err);
     return res.status(500).json({
       data: constants.messages.error.UNEXPECTED
     });
