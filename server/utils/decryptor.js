@@ -15,14 +15,12 @@ const constants = require('./constants');
  * 
 */
 module.exports = (encryptedData, key) => {
-  return new Promise((resolve, reject) => {
-    try {
-      if(!encryptedData) return reject(constants.messages.error.INVALID_DECRYPT_DATA);
-      let decryptedDataInBytes = crypto.AES.decrypt(encryptedData, key);
-      let decryptedData = JSON.parse(decryptedDataInBytes.toString(crypto.enc.Utf8));
-      return resolve(decryptedData);
-    } catch (err) {
-      return reject(err);
-    }     
-  });   
+  try {
+    if(!encryptedData) return reject(constants.messages.error.INVALID_DECRYPT_DATA);
+    let decryptedDataInBytes = crypto.AES.decrypt(encryptedData, key);
+    let decryptedData = JSON.parse(decryptedDataInBytes.toString(crypto.enc.Utf8));
+    return decryptedData;
+  } catch (err) {
+    return err;
+  }      
 };

@@ -10,6 +10,7 @@ module.exports = {
       ACCESS_BLOCKCHAIN_INFO: 'There is a problem with the connection to this blockchain info. Please try again.',
       INVALID_ENCRYPT_DATA: 'Invalid data sent to encrypt',
       INVALID_DECRYPT_DATA: 'Invalid data sent to decrypt',
+      INVALID_USER_ID: 'Invalid user id',
       UNEXPECTED: 'An unexpected error occurred while trying to access your info. Please try again.'
     },
     success: {

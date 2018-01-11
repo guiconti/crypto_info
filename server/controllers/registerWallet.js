@@ -19,6 +19,8 @@ const logger = require('../../tools/logger');
  * 
 */
 module.exports = (req, res) => {
+  let {telegramId, exchanger, apiKey, secretKey} = req.body;
+  if (!validator.isValidInteger())
   return res.status(200).json({
     msg: 'Hi'
   });
