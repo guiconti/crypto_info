@@ -43,9 +43,9 @@ module.exports = (req, res) => {
           let myWallet = new Kucoin(walletApi, walletSecret);
           myWallet.getBalance()
             .then(balanceInfo => {
-              if (balanceInfo.error)
-                return res.status(400).json({
-                  data: constants.messages.error.INVALID_CRYPTO_CURRENCY
+              if (!balanceInfo.success)
+                return res.status(500).json({
+                  data: constants.messages.error.UNABLE_TO_GET_WALLET
                 });
               myWallet.getTradingSymbols()
                 .then(kucoinMarket => {

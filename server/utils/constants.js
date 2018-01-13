@@ -16,6 +16,7 @@ module.exports = {
       INVALID_WALLET_SECRET_KEY: 'Invalid wallet secret key',
       API_DISABLED: 'This API is not enabled at the server right now',
       USER_NOT_REGISTERED: 'This user is not registered in our database.',
+      UNABLE_TO_GET_WALLET: 'We could not retrieve your wallet from the exchange. Please try again.',
       UNEXPECTED: 'An unexpected error occurred while trying to access your info. Please try again.'
     },
     success: {
