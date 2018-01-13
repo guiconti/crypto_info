@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  let ApiUser = sequelize.define('wallet', {
+  let Wallet = sequelize.define('wallet', {
     userId: {
       type: DataTypes.STRING, 
       primaryKey: true,
@@ -24,5 +24,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  return ApiUser;
+  Wallet.associate = (models) => {
+    Wallet.hasMany(models.timeline, {
+      foreignKey: 'walletId'
+    });
+  };
+
+  return Wallet;
 };

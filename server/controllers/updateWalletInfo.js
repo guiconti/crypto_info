@@ -31,7 +31,7 @@ module.exports = (req, res) => {
           .catch(err => {
             logger.critical(err);
             return;
-          })
+          });
       });
     })
     .catch(err => {

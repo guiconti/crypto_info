@@ -47,8 +47,12 @@ module.exports = (wallet) => {
 };
 
 function convertToSellCurrencies(coin, marketList, BTCtoUSDValue){
-  if (coin.coinType === 'BTC')
+  if (coin.coinType === 'BTC'){
+    coin.RatioBTCValue = 1;
+    coin.BTCValue = coin.balance;
+    coin.USDValue = coin.BTCValue * BTCtoUSDValue;
     return;
+  }
   marketList.every(marketCoin => {
     if (marketCoin.symbol === coin.coinType + '-BTC'){
       coin.RatioBTCValue = marketCoin.sell;
