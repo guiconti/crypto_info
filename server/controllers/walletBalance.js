@@ -5,7 +5,6 @@
 
 const Kucoin = require('../utils/Kucoin');
 const getWalletKeys = require('../utils/getWalletKeys');
-const encryptor = require('../utils/encryptor');
 const decryptor = require('../utils/decryptor');
 const getFormatedWalletBalance = require('../utils/getFormatedWalletBalance');
 const validator = require('../utils/validator');

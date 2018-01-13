@@ -3,7 +3,11 @@
  * @module utils/getAllWallets
 */
 
+const Kucoin = require('../utils/Kucoin');
 const getAllWallets = require('../utils/getAllWallets');
+const getFormatedWalletBalance = require('../utils/getFormatedWalletBalance');
+const decryptor = require('../utils/decryptor');
+const constants = require('../utils/constants');
 const database = require('../models/database');
 const logger = require('../../tools/logger');
 
@@ -16,13 +20,21 @@ const logger = require('../../tools/logger');
 module.exports = (req, res) => {
   getAllWallets()
     .then(wallets => {
-      wallets.forEach(wallet => {
-        let kucoinWallet = new Kucoin(wallet.walletApi, wallet.walletSecret);
-        console.log(wallet.dataValues);
+      wallets.forEach(walletInfo => {
+        console.log(walletInfo.dataValues);
+        let walletApi = decryptor(walletInfo.walletApi, constants.encryptation.WALLET_API_ENCRYPTATION_KEY);
+        let walletSecret = decryptor(walletInfo.walletSecret, constants.encryptation.WALLET_SECRET_ENCRYPTATION_KEY);
+        let wallet = new Kucoin(walletApi, walletSecret);
+        getFormatedWalletBalance(wallet)
+          .then(walletBalance => {
+          })
+          .catch(err => {
+            logger.critical(err);
+            return;
+          })
       });
     })
     .catch(err => {
-      console.log(err);
       logger.critical(err);
       return;
     });
