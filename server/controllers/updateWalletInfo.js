@@ -18,15 +18,26 @@ const logger = require('../../tools/logger');
  * 
 */
 module.exports = (req, res) => {
+  let timestamp = Date.now();
   getAllWallets()
     .then(wallets => {
       wallets.forEach(walletInfo => {
-        console.log(walletInfo.dataValues);
         let walletApi = decryptor(walletInfo.walletApi, constants.encryptation.WALLET_API_ENCRYPTATION_KEY);
         let walletSecret = decryptor(walletInfo.walletSecret, constants.encryptation.WALLET_SECRET_ENCRYPTATION_KEY);
         let wallet = new Kucoin(walletApi, walletSecret);
         getFormatedWalletBalance(wallet)
           .then(walletBalance => {
+            walletBalance.forEach(coin => {
+              coin.walletId = walletInfo.userId;
+              coin.timestamp = timestamp;
+              let timelineCoin = database.timeline.build(coin);
+              timelineCoin
+                .save()
+                .then(() => {})
+                .catch(err => {
+                  logger.critical(err);
+                });
+            });
           })
           .catch(err => {
             logger.critical(err);
