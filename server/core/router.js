@@ -18,4 +18,8 @@ router.get('/convert_currency', cryptoInfo);
 router.get('/:userId/wallet/balance', walletBalance);
 router.get('/:userId/wallet/:coin/balance', walletCoinBalance);
 
+//  Move this to the scheduler
+const updateWalletInfo = require('../controllers/updateWalletInfo');
+router.get('/wallet/update', updateWalletInfo);
+
 module.exports = router;

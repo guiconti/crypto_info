@@ -13,14 +13,20 @@ const logger = require('../../tools/logger');
  * @throws {object} - Returns a msg that indicates a fail
  * 
 */
-module.exports = () => {
-  getAllWallets
+module.exports = (req, res) => {
+  getAllWallets()
     .then(wallets => {
-      console.log(wallets);
+      wallets.forEach(wallet => {
+        let kucoinWallet = new Kucoin(wallet.walletApi, wallet.walletSecret);
+        console.log(wallet.dataValues);
+      });
     })
     .catch(err => {
       console.log(err);
       logger.critical(err);
       return;
     });
+  return res.status(200).json({
+    data: 'Hi'
+  });
 };

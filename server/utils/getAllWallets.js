@@ -4,6 +4,7 @@
 */
 
 const database = require('../models/database');
+const attributes = ['userId', 'exchanger', 'walletApi', 'walletSecret'];
 
 /**
  * Get information about all wallets in the database
@@ -15,7 +16,7 @@ const database = require('../models/database');
 module.exports = () => {
   return new Promise((resolve, reject) => {
     database.wallet
-      .find()
+      .findAll({attributes})
       .then(wallets => {
         return resolve(wallets);
       })
