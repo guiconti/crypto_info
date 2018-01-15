@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 const router = express.Router();
 router.use(bodyParser.json());
 
+const middleware = require('../controllers/middleware');
+router.use(middleware);
+
 const registerWallet = require('../controllers/registerWallet');
 
 const cryptoInfo = require('../controllers/cryptoInfo');
