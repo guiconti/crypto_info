@@ -17,7 +17,7 @@ const logger = require('../../tools/logger');
  * @return {string} - Returns a encryptated hash that will be used as the user`s API KEY
  * @throws {object} - Returns a msg that indicates a fail
  * 
- */
+*/
 module.exports = function(req, res){
   let {name, source} = req.body;
   if (!validator.isValidString(name))
