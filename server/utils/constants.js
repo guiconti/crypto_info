@@ -17,6 +17,9 @@ module.exports = {
       API_DISABLED: 'This API is not enabled at the server right now',
       USER_NOT_REGISTERED: 'This user is not registered in our database.',
       UNABLE_TO_GET_WALLET: 'We could not retrieve your wallet from the exchange. Please try again.',
+      INVALID_NAME: 'The name sent is invalid.',
+      INVALID_SOURCE: 'The source sent is invalid.',
+      INVALID_ID: 'The id sent is invalid.',
       UNEXPECTED: 'An unexpected error occurred while trying to access your info. Please try again.'
     },
     success: {
