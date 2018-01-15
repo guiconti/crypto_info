@@ -12,4 +12,7 @@ const app = express();
 app.use('/api', router);
 app.use(logger.errorHandler());
 
+//  Start cron jobs
+require('./startCronJobs');
+
 module.exports = app;

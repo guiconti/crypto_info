@@ -13,4 +13,7 @@ app.use('/api', router);
 app.use(logger.errorHandler());
 app.use(morgan('tiny'));
 
+//  Start cron jobs
+require('./startCronJobs');
+
 module.exports = app;

@@ -17,7 +17,7 @@ const logger = require('../../tools/logger');
  * @throws {object} - Returns a msg that indicates a fail
  * 
 */
-module.exports = (req, res) => {
+module.exports = () => {
   let timestamp = Date.now();
   getAllWallets()
     .then(wallets => {
@@ -49,7 +49,4 @@ module.exports = (req, res) => {
       logger.critical(err);
       return;
     });
-  return res.status(200).json({
-    data: 'Hi'
-  });
 };
