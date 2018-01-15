@@ -37,8 +37,6 @@ module.exports = (req, res) => {
         });
       let walletApi = decryptor(walletInfo.walletApi, constants.encryptation.WALLET_API_ENCRYPTATION_KEY);
       let walletSecret = decryptor(walletInfo.walletSecret, constants.encryptation.WALLET_SECRET_ENCRYPTATION_KEY);
-      console.log(walletApi);
-      console.log(walletSecret);
       let wallet = new Kucoin(walletApi, walletSecret);
       getFormatedWalletBalance(wallet)
         .then(formattedWallet => {
