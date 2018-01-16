@@ -29,12 +29,22 @@ module.exports = (req, res) => {
 
   database.timeline
     .findAll({
-      walletId: userId, 
+      where : {walletId: userId}, 
       order: [['timestamp']]
     })
     .then(timeline => {
+      let chartData = {};
+      timeline.forEach(coinInfo => {
+        if (!chartData[coinInfo.coinType])
+          chartData[coinInfo.coinType] = {
+            timestamps: [],
+            USDValues: []
+          };
+        chartData[coinInfo.coinType].timestamps.push(coinInfo.timestamp);
+        chartData[coinInfo.coinType].USDValues.push(coinInfo.USDValue);
+      });
       return res.status(200).json({
-        data: timeline
+        data: chartData
       });
     })
     .catch(err => {
