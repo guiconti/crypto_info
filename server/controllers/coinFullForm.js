@@ -31,6 +31,7 @@ module.exports = (req, res) => {
       msg: constants.messages.error.OVERBUFF_API
     });
     
+    //remove this crap below:
     console.log (databody.code);
     console.log('coin: ' + coin.toUpperCase());
     
@@ -46,55 +47,5 @@ module.exports = (req, res) => {
     return res.status(200).json({
       msg: ans
     });
-    // overbuffApiDecriptor(body)
-    //   .then((heroesInfo) => {
-    //     heroesInfo.sort((a, b) => {
-    //       return a.pick_rate>=b.pick_rate?-1:1;
-    //     });
-    //     let topPickedHeroes = heroesInfo.slice(0, constants.overbuff.NUMBER_OF_TOP_PICKED);
-    //     topPickedHeroes.forEach((heroInfo) => {
-    //       for (key in heroInfo){
-    //         if (!constants.overbuff.PICK_INFOS.includes(key)){
-    //           delete heroInfo[key];
-    //         }
-    //       }
-    //       heroInfo.hero = constants.overbuff.heroes[heroInfo.hero];
-    //       heroInfo.pick_rate = Math.round(heroInfo.pick_rate * 10000)/100 + '%';
-    //     });
-    //     return res.status(200).json({
-    //       msg: topPickedHeroes
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     logger.error(err);
-    //     return res.status(500).json({
-    //       msg: constants.messages.error.OVERBUFF_API
-    //     });
-    //   });
   });
-
-
-  // if (!validator.isValidString(coin))
-  //   return res.status(400).json({
-  //     data: constants.messages.error.INVALID_CURRENCY
-  //   });
-  // let myWallet = new Kucoin(process.env.KUCOIN_API_KEY, process.env.KUCOIN_SECRET);
-  // myWallet.getCoinBalance(coin)
-  //   .then(balanceInfo => {
-  //     if (balanceInfo.error)
-  //       return res.status(400).json({
-  //         data: constants.messages.error.INVALID_CRYPTO_CURRENCY
-  //       });
-  //     return res.status(200).json({
-  //       data: {
-  //         coin: balanceInfo.data.coinType,
-  //         balance: balanceInfo.data.balance
-  //       }
-  //     });
-  //   })
-  //   .catch(err => {
-  //     return res.status(500).json({
-  //       data: constants.messages.error.UNEXPECTED
-  //     });
-  //   });
 };
