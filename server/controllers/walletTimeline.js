@@ -6,6 +6,8 @@
 const database = require('../models/database');
 const validator = require('../utils/validator');
 const constants = require('../utils/constants');
+const createGraph = require('../utils/createGraph');
+const formatTime = require('../utils/formatTime');
 const logger = require('../../tools/logger');
 
 /**
@@ -40,9 +42,12 @@ module.exports = (req, res) => {
             timestamps: [],
             USDValues: []
           };
-        chartData[coinInfo.coinType].timestamps.push(coinInfo.timestamp);
+        chartData[coinInfo.coinType].timestamps.push(formatTime(coinInfo.timestamp));
         chartData[coinInfo.coinType].USDValues.push(coinInfo.USDValue);
       });
+      for (let coinType in chartData){
+        createGraph(coinType, chartData[coinType].timestamps, chartData[coinType].USDValues);
+      }
       return res.status(200).json({
         data: chartData
       });
@@ -53,6 +58,5 @@ module.exports = (req, res) => {
         data: constants.messages.error.UNEXPECTED
       });
     })
-
 };
 
