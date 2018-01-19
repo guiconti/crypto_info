@@ -16,11 +16,9 @@ const request = require('request');
  * @throws {object} - Returns a msg that indicates a fail
  * 
 */
-module.exports = (req, res) => { 
-  //let {coin} = req.params;
+module.exports = (req, res) => {
   let {coin} = req.body;
   let url = constants.urls.KUCOIN_PREFIX + constants.urls.KUCOIN_GET_COIN_INFO;
-  //Kucoin.getCoinInfo;
   
   request.get({url: url}, (err, httpResponse, body) => {
     let databody = JSON.parse(body);
@@ -36,14 +34,13 @@ module.exports = (req, res) => {
       });
     databody.data.forEach(datacoin => {
       if (datacoin.coin == coin.toUpperCase()){
-        //answ += datacoin.name;
         return res.status(200).json({
           msg: answ + datacoin.name
         });
       }
     });
     return res.status(400).json({
-      msg: 'num achô'
+      msg: `Couldn't find`
     });
 
   });
