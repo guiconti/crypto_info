@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
 router.get('/convert_currency', cryptoInfo);
 router.get('/:userId/wallet/balance', walletBalance);
 router.get('/:userId/wallet/:coin/balance', walletCoinBalance);
+router.get('/coin_full_form', coinFullForm);
 //router.post('/create_api_key', generateApiKey);
-router.post('/coin_full_form', coinFullForm);
 
 module.exports = router;

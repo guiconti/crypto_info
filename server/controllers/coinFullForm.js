@@ -1,9 +1,8 @@
 /**
  * Get coin's full form name from the Kucoin API
- * @module controllers/walletCoinBalance
+ * @module controllers/coinFullForm
 */
 
-const Kucoin = require('../utils/Kucoin');
 const validator = require('../utils/validator');
 const constants = require('../utils/constants');
 const request = require('request');
@@ -11,13 +10,13 @@ const request = require('request');
 /**
  * Get coin's full form name from the Kucoin API
  *
- * @param {object} req.body.coin - Coin to get info
+ * @param {object} req.query.coin - Coin to get info
  * @return {string} - Returns crypto's full form name
  * @throws {object} - Returns a msg that indicates a fail
  * 
 */
 module.exports = (req, res) => {
-  let {coin} = req.body;
+  let coin = req.query.coin;
   let url = constants.urls.KUCOIN_PREFIX + constants.urls.KUCOIN_GET_COIN_INFO;
   
   request.get({url: url}, (err, httpResponse, body) => {
@@ -42,6 +41,5 @@ module.exports = (req, res) => {
     return res.status(400).json({
       msg: constants.messages.error.UNKOWN_COIN
     });
-
   });
 };
