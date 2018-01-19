@@ -44,7 +44,7 @@ module.exports = (req, res) => {
       }
     });
     return res.status(400).json({
-      data: constants.messages.error.UNKOWN_COIN
+      data: constants.messages.error.UNKNOWN_COIN
     });
   });
 };
