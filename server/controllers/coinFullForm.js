@@ -1,5 +1,5 @@
 /**
- * Get information about one coin at user's wallet
+ * Get coin's full form name from the Kucoin API
  * @module controllers/walletCoinBalance
 */
 
@@ -9,10 +9,10 @@ const constants = require('../utils/constants');
 const request = require('request');
 
 /**
- * Get information about one coin at user`s wallet
+ * Get coin's full form name from the Kucoin API
  *
- * @param {object} req.query.coin - Coin to get info
- * @return {object} - Returns information about the crypto currency
+ * @param {object} req.body.coin - Coin to get info
+ * @return {string} - Returns crypto's full form name
  * @throws {object} - Returns a msg that indicates a fail
  * 
 */
@@ -22,7 +22,7 @@ module.exports = (req, res) => {
   
   request.get({url: url}, (err, httpResponse, body) => {
     let databody = JSON.parse(body);
-    let answ = 'moeda nawa: ';
+    let answ = constants.messages.success.COIN_NAME_PREFIX;
     if (err)
     return res.status(500).json({
       msg: constants.messages.error.UNEXPECTED
@@ -40,7 +40,7 @@ module.exports = (req, res) => {
       }
     });
     return res.status(400).json({
-      msg: `Couldn't find`
+      msg: constants.messages.error.UNKOWN_COIN
     });
 
   });

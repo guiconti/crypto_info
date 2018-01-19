@@ -21,10 +21,12 @@ module.exports = {
       INVALID_SOURCE: 'The source sent is invalid.',
       INVALID_ID: 'The id sent is invalid.',
       NO_ACCESS_TO_API_KEY: 'You need a valid API key to access this feature.',
-      UNEXPECTED: 'An unexpected error occurred while trying to access your info. Please try again.'
+      UNEXPECTED: 'An unexpected error occurred while trying to access your info. Please try again.',
+      UNKOWN_COIN: `Couldn't find`
     },
     success: {
-      WALLET_REGISTERED: 'Wallet registered.'
+      WALLET_REGISTERED: 'Wallet registered.',
+      COIN_NAME_PREFIX: 'Coin name: '
     }
   },
   values: {
