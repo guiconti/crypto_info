@@ -26,12 +26,12 @@ module.exports = {
     },
     success: {
       WALLET_REGISTERED: 'Wallet registered.',
-      COIN_NAME_PREFIX: 'Coin name: '
     }
   },
   values: {
     FINAL_CURRENCY: 'BRL',
-    DBC: 'DeepBrain Chann'
+    DBC: 'DeepBrain Chan',
+    COIN_NAME_PREFIX: 'Coin name: '
   },
   urls: {
     BTC_INFO: 'https://api.coindesk.com/v1/bpi/currentprice.json',

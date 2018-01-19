@@ -26,7 +26,7 @@ module.exports = (req, res) => {
 
   request.get({url}, (err, httpResponse, body) => {
     let dataBody = JSON.parse(body);
-    let answerMsg = constants.messages.success.COIN_NAME_PREFIX;
+    let answerMsg = constants.values.COIN_NAME_PREFIX;
     if (err)
       return res.status(500).json({
         data: constants.messages.error.UNEXPECTED
