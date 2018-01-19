@@ -30,7 +30,8 @@ module.exports = {
     }
   },
   values: {
-    FINAL_CURRENCY: 'BRL'
+    FINAL_CURRENCY: 'BRL',
+    DBC: 'DeepBrain Chann'
   },
   urls: {
     BTC_INFO: 'https://api.coindesk.com/v1/bpi/currentprice.json',

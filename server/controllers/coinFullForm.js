@@ -16,30 +16,35 @@ const request = require('request');
  * 
 */
 module.exports = (req, res) => {
-  let coin = req.query.coin;
+  let reqCoin = req.query.coin.toUpperCase();
+  console.log(reqCoin);
   let url = constants.urls.KUCOIN_PREFIX + constants.urls.KUCOIN_GET_COIN_INFO;
-  
-  request.get({url: url}, (err, httpResponse, body) => {
-    let databody = JSON.parse(body);
-    let answ = constants.messages.success.COIN_NAME_PREFIX;
-    if (err)
-    return res.status(500).json({
-      msg: constants.messages.error.UNEXPECTED
+  if (!validator.isValidString(reqCoin))
+    return res.status(400).json({
+      data: constants.messages.error.INVALID_CRYPTO_CURRENCY
     });
-    
-    if(coin.toUpperCase() == "DBC")
-      return res.status(200).json({
-        msg: answ += "DeepBrain Chan"
+
+  request.get({url}, (err, httpResponse, body) => {
+    let dataBody = JSON.parse(body);
+    let answerMsg = constants.messages.success.COIN_NAME_PREFIX;
+    if (err)
+      return res.status(500).json({
+        data: constants.messages.error.UNEXPECTED
       });
-    databody.data.forEach(datacoin => {
-      if (datacoin.coin == coin.toUpperCase()){
+    
+    if(reqCoin == "DBC")
+      return res.status(200).json({
+        data: answerMsg += constants.values.DBC
+      });
+    dataBody.data.forEach(kCoin => {
+      if (kCoin.coin == reqCoin){
         return res.status(200).json({
-          msg: answ + datacoin.name
+          data: answerMsg + kCoin.name
         });
       }
     });
     return res.status(400).json({
-      msg: constants.messages.error.UNKOWN_COIN
+      data: constants.messages.error.UNKOWN_COIN
     });
   });
 };
