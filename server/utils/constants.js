@@ -22,14 +22,17 @@ module.exports = {
       INVALID_SOURCE: 'The source sent is invalid.',
       INVALID_ID: 'The id sent is invalid.',
       NO_ACCESS_TO_API_KEY: 'You need a valid API key to access this feature.',
-      UNEXPECTED: 'An unexpected error occurred while trying to access your info. Please try again.'
+      UNEXPECTED: 'An unexpected error occurred while trying to access your info. Please try again.',
+      UNKNOWN_COIN: 'Couldn\'t find'
     },
     success: {
-      WALLET_REGISTERED: 'Wallet registered.'
+      WALLET_REGISTERED: 'Wallet registered.',
     }
   },
   values: {
-    FINAL_CURRENCY: 'BRL'
+    FINAL_CURRENCY: 'BRL',
+    DBC: 'DeepBrain Chan',
+    COIN_NAME_PREFIX: 'Coin name: '
   },
   urls: {
     BTC_INFO: 'https://api.coindesk.com/v1/bpi/currentprice.json',
@@ -38,7 +41,8 @@ module.exports = {
     KUCOIN_GET_BALANCE: '/v1/account/balance',
     KUCOIN_GET_COIN_BALANCE_PREFIX: '/v1/account/',
     KUCOIN_GET_COIN_BALANCE_SUFFIX: '/balance',
-    KUCOIN_GET_MARKET_LIST: '/v1/market/open/symbols'
+    KUCOIN_GET_MARKET_LIST: '/v1/market/open/symbols',
+    KUCOIN_GET_COIN_INFO: '/v1/market/open/coins'
   },
   regex: {
     integer: /^-?\d+$/

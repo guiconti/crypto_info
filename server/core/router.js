@@ -14,8 +14,8 @@ const cryptoInfo = require('../controllers/cryptoInfo');
 const walletBalance = require('../controllers/walletBalance');
 const walletCoinBalance = require('../controllers/walletCoinBalance');
 const walletTimeline = require('../controllers/walletTimeline');
-
 const generateApiKey = require('../controllers/generateApiKey');
+const coinFullForm = require('../controllers/coinFullForm');
 
 //  Internal APIs
 router.post('/wallet/register', registerWallet);
@@ -24,6 +24,7 @@ router.post('/wallet/register', registerWallet);
 router.get('/convert_currency', cryptoInfo);
 router.get('/:userId/wallet/balance', walletBalance);
 router.get('/:userId/wallet/:coin/balance', walletCoinBalance);
+router.get('/coin/name', coinFullForm);
 router.get('/:userId/wallet/timeline', walletTimeline);
 //router.post('/create_api_key', generateApiKey);
 
