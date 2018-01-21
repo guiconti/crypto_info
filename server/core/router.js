@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const constants = require('../utils/constants');
 
 const router = express.Router();
 router.use(bodyParser.json());
@@ -25,5 +26,8 @@ router.get('/:userId/wallet/balance', walletBalance);
 router.get('/:userId/wallet/:coin/balance', walletCoinBalance);
 router.get('/:userId/wallet/timeline', walletTimeline);
 //router.post('/create_api_key', generateApiKey);
+
+//  Server static folder with graphs
+router.use('/graphs', express.static(constants.paths.GRAPHS_PATH));
 
 module.exports = router;

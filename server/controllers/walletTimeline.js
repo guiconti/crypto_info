@@ -46,7 +46,7 @@ module.exports = (req, res) => {
         chartData[coinInfo.coinType].USDValues.push(coinInfo.USDValue);
       });
       for (let coinType in chartData){
-        createGraph(coinType, chartData[coinType].timestamps, chartData[coinType].USDValues);
+        createGraph(coinType, chartData[coinType].timestamps, chartData[coinType].USDValues, userId + coinType);
       }
       return res.status(200).json({
         data: chartData

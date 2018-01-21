@@ -15,59 +15,56 @@ const constants = require('./constants');
  * @throws {object} - Returns a msg that indicates a fail
  * 
 */
-module.exports = (label, xData, yData) => {
+module.exports = (label, xData, yData, fileName) => {
   return new Promise((resolve, reject) => {
     let chartOptions = {
       type: 'line',
       data: {
-          labels: xData,
-          datasets: [{
-              label: label,
-              data: yData
-          }]
+        labels: xData,
+        datasets: [{
+            label: label,
+            data: yData
+        }]
       },
       options: {
-          responsive: false,
-          width: 400,
-          height: 400,
-          animation: false,
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero: true
-                  }
-              }]
-          },
-          tooltips: {
-              mode: 'label'
-          }
+        responsive: false,
+        width: 400,
+        height: 400,
+        animation: false,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        },
+        tooltips: {
+          mode: 'label'
+        }
       }
     };
 
     var chartNode = new ChartjsNode(1920, 1080);
     return chartNode.drawChart(chartOptions)
-    .then(() => {
+      .then(() => {
         // chart is created
-
         // get image as png buffer
         return chartNode.getImageBuffer('image/png');
-    })
-    .then(buffer => {
+      })
+      .then(buffer => {
         Array.isArray(buffer) // => true
         // as a stream
         return chartNode.getImageStream('image/png');
-    })
-    .then(streamResult => {
-        // using the length property you can do things like
-        // directly upload the image to s3 by using the
-        // stream and length properties
+      })
+      .then(streamResult => {
         streamResult.stream // => Stream object
         streamResult.length // => Integer length of stream
         // write to a file
-        return chartNode.writeImageToFile('image/png', './server/graphs/' + coin + '.png');
-    })
-    .then(() => {
-      chartNode.destroy();
-    });
+        let savePath = constants.paths.GRAPHS_PATH + constants.paths.WALLET_SUFFIX + fileName + '.png';
+        return chartNode.writeImageToFile('image/png', savePath);
+      })
+      .then(() => {
+        chartNode.destroy();
+      });
   });   
 };

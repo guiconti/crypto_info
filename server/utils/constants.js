@@ -2,6 +2,7 @@
  * All project constants
  * @module utils/constants
 */
+const path = require('path');
 module.exports = {
   messages: {
     error: {
@@ -45,5 +46,9 @@ module.exports = {
   encryptation: {
     WALLET_API_ENCRYPTATION_KEY: process.env.WALLET_API_ENCRYPTATION_KEY,
     WALLET_SECRET_ENCRYPTATION_KEY: process.env.WALLET_SECRET_ENCRYPTATION_KEY
+  },
+  paths: {
+    GRAPHS_PATH: path.join(__dirname, '../graphs/'),
+    WALLET_SUFFIX: 'wallet/'
   }
 };
