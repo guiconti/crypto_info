@@ -52,7 +52,7 @@ module.exports = {
     WALLET_SECRET_ENCRYPTATION_KEY: process.env.WALLET_SECRET_ENCRYPTATION_KEY
   },
   paths: {
-    GRAPHS_PATH: path.join(__dirname, '../graphs/'),
-    WALLET_SUFFIX: 'wallet/'
+    GRAPHS_PATH: path.join(__dirname, '../graphs'),
+    WALLET_SUFFIX: '/wallet/'
   }
 };

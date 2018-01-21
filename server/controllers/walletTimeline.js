@@ -8,6 +8,7 @@ const validator = require('../utils/validator');
 const constants = require('../utils/constants');
 const createGraph = require('../utils/createGraph');
 const formatTime = require('../utils/formatTime');
+const async = require('async');
 const logger = require('../../tools/logger');
 
 /**
@@ -45,11 +46,25 @@ module.exports = (req, res) => {
         chartData[coinInfo.coinType].timestamps.push(formatTime(coinInfo.timestamp));
         chartData[coinInfo.coinType].USDValues.push(coinInfo.USDValue);
       });
-      for (let coinType in chartData){
-        createGraph(coinType, chartData[coinType].timestamps, chartData[coinType].USDValues, userId + coinType);
-      }
-      return res.status(200).json({
-        data: chartData
+      let fileNames = [];
+      async.forEachOf(chartData, (value, coinType, callback) => {
+        createGraph(coinType, chartData[coinType].timestamps, chartData[coinType].USDValues, userId + coinType)
+          .then(fileName => {
+            fileNames.push(fileName);
+            callback(null);
+          })
+          .catch(err => {
+            callback(err);
+          });
+      }, (err) => {
+        if (err){
+          return res.status(500).json({
+            data: constants.messages.error.UNEXPECTED
+          });
+        }
+        return res.status(200).json({
+          data: fileNames
+        });
       });
     })
     .catch(err => {

@@ -15,6 +15,7 @@
   },
   "author": "Bendev",
   "dependencies": {
+    "async": "^2.6.0",
     "body-parser": "^1.15.2",
     "chart.js": "^2.7.1",
     "chartjs-node": "^1.6.1",
