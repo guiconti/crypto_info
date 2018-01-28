@@ -72,4 +72,4 @@ typings/
 .DS_Store
 
 # Graph images
-server/graphs/
+server/graphs/wallet/*.*
