@@ -65,7 +65,7 @@ module.exports = (label, xData, yData, fileName) => {
       })
       .then(() => {
         chartNode.destroy();
-        return resolve(constants.paths.WALLET_SUFFIX + fileName + 'png');
+        return resolve(constants.paths.WALLET_SUFFIX + fileName + '.png');
       })
       .catch(err => {
         return reject(err);
